@@ -1,0 +1,83 @@
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 30px 15px;
+  font-family: Arial, sans-serif;
+  background: #f1f2f6;
+}
+
+.form-container {
+  max-width: 390px;
+  margin: 0 auto;
+  padding: 25px 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+}
+
+h2 {
+  text-align: center;
+  color: #176eae;
+  margin: 10px 0 25px;
+}
+
+input {
+  width: 100%;
+  padding: 13px;
+  margin-bottom: 14px;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  font-size: 14px;
+}
+
+h4 {
+  margin-top: 12px;
+  margin-bottom: 15px;
+}
+
+video {
+  width: 100%;
+  border-radius: 8px;
+  background: #eee;
+  display: block;
+  margin-bottom: 15px;
+}
+
+button {
+  width: 100%;
+  padding: 13px;
+  margin-bottom: 12px;
+  border: none;
+  border-radius: 6px;
+  background: #176eae;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #105b92;
+}
+
+#capturePhoto {
+  background: #999;
+}
+
+#selfieStatus {
+  font-size: 14px;
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 15px 10px;
+  }
+
+  .form-container {
+    padding: 22px 16px;
+  }
+}
