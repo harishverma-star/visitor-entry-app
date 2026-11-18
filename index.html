@@ -36,7 +36,8 @@
 
       <video id="camera" autoplay playsinline></video>
       <canvas id="photoCanvas" hidden></canvas>
-
+<img id="selfiePreview" hidden
+     style="width:100%; border-radius:8px; margin-bottom:15px;">
       <button type="button" id="openCamera">
         Open Front Camera
       </button>
@@ -44,7 +45,9 @@
       <button type="button" id="capturePhoto">
         Capture Selfie
       </button>
-
+<button type="button" id="retakePhoto" hidden>
+  Retake Selfie
+</button>
       <p id="selfieStatus">Selfie not captured</p>
 
       <button type="submit">
