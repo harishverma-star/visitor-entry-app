@@ -8,7 +8,12 @@ const openCamera = document.getElementById("openCamera");
 const capturePhoto = document.getElementById("capturePhoto");
 const retakePhoto = document.getElementById("retakePhoto");
 const visitorForm = document.getElementById("visitorForm");
+const mobileNumber = document.getElementById("mobileNumber");
 
+// Allow only 10 digits
+mobileNumber.addEventListener("input", function () {
+  this.value = this.value.replace(/\D/g, "").slice(0, 10);
+});
 let cameraStream = null;
 let selfieCaptured = false;
 let selfieImage = "";
