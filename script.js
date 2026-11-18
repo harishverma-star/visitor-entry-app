@@ -1,38 +1,58 @@
 
 const camera = document.getElementById("camera");
 const canvas = document.getElementById("photoCanvas");
+const preview = document.getElementById("selfiePreview");
 const statusText = document.getElementById("selfieStatus");
-
-let cameraStream = null;
-let selfieCaptured = false;
 
 const openCamera = document.getElementById("openCamera");
 const capturePhoto = document.getElementById("capturePhoto");
+const retakePhoto = document.getElementById("retakePhoto");
 const visitorForm = document.getElementById("visitorForm");
 
-// Open front camera
-openCamera.addEventListener("click", async function () {
+let cameraStream = null;
+let selfieCaptured = false;
+let selfieImage = "";
+
+// Start front camera
+async function startCamera() {
   try {
     cameraStream = await navigator.mediaDevices.getUserMedia({
-      video: {
-        facingMode: "user"
-      },
+      video: { facingMode: "user" },
       audio: false
     });
 
     camera.srcObject = cameraStream;
     await camera.play();
 
-    statusText.textContent = "Camera opened successfully";
-  } catch (error) {
-    alert("Camera access denied or unavailable. Please allow camera permission.");
-  }
-});
+    camera.hidden = false;
+    preview.hidden = true;
+    capturePhoto.hidden = false;
+    retakePhoto.hidden = true;
 
-// Capture visitor selfie
+    statusText.textContent = "Camera ready. Capture your selfie.";
+
+  } catch (error) {
+    alert("Unable to open camera. Please allow camera permission.");
+  }
+}
+
+// Stop camera
+function stopCamera() {
+  if (cameraStream) {
+    cameraStream.getTracks().forEach(track => track.stop());
+    cameraStream = null;
+  }
+
+  camera.srcObject = null;
+}
+
+// Open camera button
+openCamera.addEventListener("click", startCamera);
+
+// Capture selfie
 capturePhoto.addEventListener("click", function () {
   if (!cameraStream) {
-    alert("Please open the front camera first.");
+    alert("Please open the camera first.");
     return;
   }
 
@@ -52,15 +72,32 @@ capturePhoto.addEventListener("click", function () {
     canvas.height
   );
 
+  selfieImage = canvas.toDataURL("image/jpeg", 0.85);
   selfieCaptured = true;
 
-  statusText.textContent = "Selfie captured successfully";
+  preview.src = selfieImage;
+  preview.hidden = false;
 
-  cameraStream.getTracks().forEach(track => track.stop());
-  cameraStream = null;
+  camera.hidden = true;
+  capturePhoto.hidden = true;
+  retakePhoto.hidden = false;
+
+  statusText.textContent = "Selfie captured successfully!";
+
+  stopCamera();
 });
 
-// Submit form (test only)
+// Retake selfie button
+retakePhoto.addEventListener("click", function () {
+  selfieCaptured = false;
+  selfieImage = "";
+  preview.src = "";
+  preview.hidden = true;
+
+  startCamera();
+});
+
+// Submit form (testing only)
 visitorForm.addEventListener("submit", function (event) {
   event.preventDefault();
 
@@ -69,7 +106,5 @@ visitorForm.addEventListener("submit", function (event) {
     return;
   }
 
-  alert(
-    "Visitor form test successful! Google Sheets connection will be added in the next phase."
-  );
+  alert("Selfie and visitor form test successful! Google Sheets connection will be added next.");
 });
